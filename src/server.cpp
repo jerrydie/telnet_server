@@ -17,7 +17,7 @@ namespace hse::Telnet
 	{
 	    start_accept();
 	}
-
+	
 	void Server::start_accept()
 	{
 	    std::cout << "TelnetServer::start_accept\n"; // вывод для просмотра процесса работы программы

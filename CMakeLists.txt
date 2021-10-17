@@ -16,7 +16,7 @@ add_executable(${PROJECT_NAME}
                 src/server.cpp
                 src/session.cpp
 )
-target_link_libraries(${PROJECT_NAME} pthread boost_system boost_program_options)
+target_link_libraries(${PROJECT_NAME} pthread boost_system boost_program_options boost_filesystem)
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
