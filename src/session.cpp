@@ -37,17 +37,21 @@ namespace hse::Telnet
 			socket_.async_read_some(ba::buffer(buffer, max_length),
 		    		boost::bind(&Session::handle_read, this, ba::placeholders::error, ba::placeholders::bytes_transferred));
 		}
-		// Если команда дочиталась, запускаем ее асинхронное выполнение, результат записываем в пайп
+		// Если название дочиталось, запускаем файл на асинхронное выполнение, результат записываем в пайп
 		// и пишем его в сокет.
 		else {
-			try {
-				bp::child c(shell, bp::search_path(shell_file_buffer.data()), bp::std_out > ap);
-				ba::async_read(ap, ba::buffer(result_buffer), [](const bs::error_code &ec, std::size_t size){});
-				c.wait();
+
+			bp::child c(shell, shell_file_buffer.data(), bp::std_out > ap);
+			ba::async_read(ap, ba::buffer(result_buffer), [](const bs::error_code &ec, std::size_t size){});
+			c.wait();
+			if (c.exit_code() == 0)
 				ba::async_write(socket_, ba::buffer(result_buffer), 
-				   boost::bind(&Session::handle_write, this, ba::placeholders::error));
+				   	boost::bind(&Session::handle_write, this, ba::placeholders::error));
+			else
+			{
+				std::cerr << "Session::handle_read child error occured. Session terminated.\n";
+				delete this;
 			}
-			catch
 		}
 	    }
 	    else

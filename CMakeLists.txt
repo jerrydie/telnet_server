@@ -20,9 +20,3 @@ target_link_libraries(${PROJECT_NAME} pthread boost_system boost_program_options
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
-
-if(DOXYGEN_FOUND)
-  configure_file(Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-  add_custom_target(docs ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-  set_property(DIRECTORY APPEND PROPERTY ADDITIONAL_MAKE_CLEAN_FILES api-doc)
-endif()
