@@ -8,12 +8,12 @@
 
 namespace ba = boost::asio;
 namespace bs = boost::system;
-using boost::asio::ip::tcp;
+namespace bai = boost::asio::ip;
 
 namespace hse::Telnet 
 {
 	Server::Server(ba::io_service& io_service, uint16_t port)
-	    : ios(io_service), acpt(io_service, tcp::endpoint(tcp::v4(), port))
+	    : ios(io_service), acpt(io_service, bai::tcp::endpoint(bai::tcp::v4(), port))
 	{
 	    start_accept();
 	}
@@ -23,7 +23,7 @@ namespace hse::Telnet
 	    std::cout << "TelnetServer::start_accept\n"; // вывод для просмотра процесса работы программы
 	    Session* new_session = new Session(ios);
 	    std::cout << "New session created by the server\n"; // вывод для просмотра процесса работы программы
-	    acceptor.async_accept(new_session->socket(), boost::bind(&Server::handle_accept, this, new_session, ba::placeholders::error));
+	    acpt.async_accept(new_session->socket(), boost::bind(&Server::handle_accept, this, new_session, ba::placeholders::error));
 	}
 
 	void Server::handle_accept(Session* new_session, const bs::error_code& error)

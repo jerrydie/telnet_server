@@ -5,7 +5,7 @@
 
 namespace ba = boost::asio;
 namespace bs = boost::system;
-namespace bait = boost::asio::ip::tcp;
+namespace bai = boost::asio::ip;
 
 namespace hse::Telnet 
 {
@@ -14,22 +14,22 @@ namespace hse::Telnet
 	public:
 	    Session(ba::io_service& io_service);
 
-	    bait::socket& socket() { return socket_; }
+	    bai::tcp::socket& socket() { return socket_; }
 
 	    void start();
 
-	    auto max_length = 3;
+	    enum { max_length = 3 };
 
 	private:
 	    void handle_read(const bs::error_code& error, size_t bytes_transferred);
 
 	    void handle_write(const bs::error_code& error);
 
-	    bait::socket socket_;
+	    bai::tcp::socket socket_;
 	    
 	    char buffer[max_length];
 	    
-	    const auto shell = getenv("SHELL");
+	    const char* shell = getenv("SHELL");
 	};
 }
 #endif

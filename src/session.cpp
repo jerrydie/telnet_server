@@ -7,7 +7,7 @@
 
 namespace ba = boost::asio;
 namespace bs = boost::system;
-namespace bait = boost::asio::ip::tcp;
+namespace bai = boost::asio::ip;
 
 namespace hse::Telnet
 {
@@ -17,9 +17,8 @@ namespace hse::Telnet
 	void Session::start()
 	{
 	    std::cout << "Telnet session started\n"; // вывод для просмотра процесса работы программы
-	    mSocket.async_read_some(boost::asio::buffer(buffer, max_length),
-		boost::bind(&Session::handle_read, this,
-		    ba::placeholders::error, ba::placeholders::bytes_transferred));
+	    socket_.async_read_some(boost::asio::buffer(buffer, max_length),
+		boost::bind(&Session::handle_read, this, ba::placeholders::error, ba::placeholders::bytes_transferred));
 	}
 
 	void Session::handle_read(const bs::error_code& error, size_t bytes_transferred)
@@ -32,7 +31,7 @@ namespace hse::Telnet
 	    }
 	    else
 	    {
-		std::cerr << "Session::handle_read error: " << error << std::endl;
+		std::cerr << "Session::handle_read error: " << error << '\n';
 		delete this;
 	    }
 	}
@@ -47,7 +46,7 @@ namespace hse::Telnet
 	    }
 	    else
 	    {
-		std::cerr << "Session::handle_write error: " << error << std::endl;
+		std::cerr << "Session::handle_write error: " << error << '\n';
 		delete this;
 	    }
 	}

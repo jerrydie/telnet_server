@@ -8,7 +8,7 @@
 
 namespace ba = boost::asio;
 namespace bs = boost::system;
-namespace bait =  boost::asio::ip::tcp;
+namespace bai =  boost::asio::ip;
 
 namespace hse::Telnet 
 {
@@ -16,7 +16,7 @@ namespace hse::Telnet
 	{
 	private:
 	    ba::io_service& ios;
-	    tcp::acceptor acpt;
+	    bai::tcp::acceptor acpt;
 	public:
 	/***
 	* Конструктор класса сервера, принимает на вход два параметра:
