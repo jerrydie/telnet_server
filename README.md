@@ -7,12 +7,12 @@
 
 Вывод со стороны сервера:
 ```
-TelnetServer::start_accept
+Server::start_accept
 New session created by the server
 Before io_service.run()
-TelnetServer::handle_accept starting session
+Server::handle_accept starting session
 Telnet session started
-TelnetServer::start_accept
+Server::start_accept
 New session created by the server
 Session::handle_read 3 bytes
 Session::handle_read 3 bytes

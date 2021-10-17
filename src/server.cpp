@@ -20,7 +20,7 @@ namespace hse::Telnet
 	
 	void Server::start_accept()
 	{
-	    std::cout << "TelnetServer::start_accept\n"; // вывод для просмотра процесса работы программы
+	    std::cout << "Server::start_accept\n"; // вывод для просмотра процесса работы программы
 	    Session* new_session = new Session(ios);
 	    std::cout << "New session created by the server\n"; // вывод для просмотра процесса работы программы
 	    acpt.async_accept(new_session->socket(), boost::bind(&Server::handle_accept, this, new_session, ba::placeholders::error));
@@ -30,12 +30,12 @@ namespace hse::Telnet
 	{
 	    if (!error)
 	    {
-		std::cout << "TelnetServer::handle_accept starting session\n"; // вывод для просмотра процесса работы программы
+		std::cout << "Server::handle_accept starting session\n"; // вывод для просмотра процесса работы программы
 		new_session->start();
 	    }
 	    else
 	    {
-		std::cerr << "TelnetServer::handle_accept error: " << error << '\n';
+		std::cerr << "Server::handle_accept error: " << error << '\n';
 		delete new_session;
 	    }
 
